@@ -1,0 +1,34 @@
+== Suppressed Messages ==
+
+# Bekannte HTML-Serialisierungsprobleme der vom Basis-Template erzeugten Suchseite im Lab-Build (IG Publisher v3.0.4). Die Unterdrueckung gilt nur fuer die acht im QA-Report vom 18.11.2026 beobachteten Meldungen; eigene FHIR-Validierungsfehler werden nicht unterdrueckt. Generierte Dateien in output werden nicht manuell geaendert. Eine allgemeine Template-Umstellung ist fuer dieses kleine Lehr-IG nicht vorgesehen; die Suchfunktion ist damit nicht als getestet bestaetigt.
+The html source is not well formed: Found "</a>" expecting "</img>" at line 34 column 177
+The html source is not well formed: Found "</div>" expecting "</body>" at line 79 column 10
+The html source is not well formed: Found "</div>" expecting "</body>" at line 80 column 9
+The html source is not well formed: Found "</div>" expecting "</body>" at line 109 column 8
+The html source is not well formed: Found "</div>" expecting "</body>" at line 111 column 12
+The html source is not well formed: Found "</div>" expecting "</body>" at line 112 column 20
+The html source is not well formed: Found "</div>" expecting "</body>" at line 113 column 16
+The html source is not well formed: Found "</div>" expecting "</body>" at line 115 column 12
+
+# Die Lab-Vorlage schreibt CH Core 6.0.0 und CH Term 3.3.0 vor; sushi-config.yaml kennzeichnet diesen Bereich mit "Ab hier nichts aendern". Diese festen Versionen bleiben fuer einen reproduzierbaren, zur Aufgabe passenden Build erhalten. Die Meldung empfiehlt eine neuere Version, meldet aber keinen ungueltigen Code.
+The ImplementationGuide uses package ch.fhir.ig.ch-term#3.3.0 released on 2025-12-15, but the most recent appropriate version is 3.4.0. This reference is getting old and the more recent version should be considered
+
+# Optionale OIDs sind fuer dieses Lehr-IG nicht gefordert. Die vorhandenen kanonischen URLs identifizieren IG und Profil; es werden keine unbegruendeten oder erfundenen OIDs vergeben.
+The resource ImplementationGuide/ch.zhaw.dg.broegnat could usefully have an OID assigned (OIDs are easy to assign - see https://build.fhir.org/ig/FHIR/ig-guidance/oids.html)
+The resource StructureDefinition/dg-medication-allergy could usefully have an OID assigned (OIDs are easy to assign - see https://build.fhir.org/ig/FHIR/ig-guidance/oids.html)
+
+# Die veraltete maxValueSet-Extension erscheint im generierten Snapshot; sie wird in unserem eigenen Profil nicht explizit verwendet. Geerbte bzw. vom Tooling erzeugte Metadaten werden nicht aus dem generierten JSON geloescht. Umstellung auf additionalBinding erst mit einer abgestimmten Aktualisierung von Abhaengigkeiten und Toolchain. Dies ist ein Hinweis, kein Validierungsfehler.
+The extension http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet|5.4.0 is deprecated with the note: 'Use additionalBinding extension or element instead'
+
+
+# Die Rechte- und Lizenzfragmente werden im kleinen Lehr-IG nicht separat eingebunden. Das IG definiert keine eigene Terminologie; Rechte und Lizenzen der referenzierten Inhalte gelten weiterhin und sind in den verlinkten Quell-IGs dokumentiert. Die Unterdrueckung aendert keine Lizenzpflichten.
+The HTML fragment 'ip-statements.xhtml' is not included anywhere in the produced implementation guide
+
+# Das Lehr-IG zielt ausschliesslich auf FHIR R4 (4.0.1). Eine zusaetzliche Darstellung der Cross-Version-Analyse ist fuer den Aufgaben-Scope nicht vorgesehen; daraus wird keine Kompatibilitaet mit anderen FHIR-Versionen abgeleitet.
+An HTML fragment from the set [cross-version-analysis.xhtml, cross-version-analysis-inline.xhtml] is not included anywhere in the produced implementation guide
+
+# Die Abhaengigkeit von CH Core wird auf der Startseite beschrieben; die konkreten Paketversionen stehen in sushi-config.yaml und im QA-Report. Fuer die Uebung wird keine zusaetzliche generierte Abhaengigkeitstabelle eingebunden.
+An HTML fragment from the set [dependency-table.xhtml, dependency-table-short.xhtml, dependency-table-nontech.xhtml] is not included anywhere in the produced implementation guide
+
+# Dieses IG deklariert keine globalen Profile. Das Allergieprofil wird gezielt ueber InstanceOf angewendet; eine zusaetzliche Tabelle zu globalen Profilen ist deshalb fuer diese Uebung nicht erforderlich.
+The HTML fragment 'globals-table.xhtml' is not included anywhere in the produced implementation guide
