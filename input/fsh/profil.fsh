@@ -8,57 +8,41 @@
  * ---------------------------------------------------------------------------
  */
 
-// =====================================================================
-// Schritt 5: Euer Profil
-//
-// Die Kopfzeilen sind schon ausgefüllt. Für jede Anforderung aus dem
-// Aufgabenblatt steht unten eine auskommentierte Zeile mit dem Element.
-// Entfernt die // und ersetzt TODO_Regel durch die Regel, die ihr
-// gewählt habt. Eine Anforderung kann auch mehrere Zeilen brauchen.
-//
-// Wichtig: Hier stehen Regeln für alle Allergien, z. B. "criticality MS".
-// Einen Wert setzt ihr im Profil nur, wenn er für jede Allergie immer
-// gilt (Wert fixieren). Werte, die nur für eine bestimmte Patientin
-// gelten, z. B. criticality #high, gehören ins Beispiel (beispiele.fsh).
-//
-// Regeltypen:
-//   Kardinalität   * element 1..1
-//   Must Support   * element MS
-//   Binding        * element from $ValueSet (required)
-//   Typ            * element[x] only dateTime
-//                  * element only Reference(CHCorePractitioner)
-//   Wert           * element = #code
-//
-// Nach jeder Änderung lokal prüfen:  sushi build .
-// =====================================================================
-
 Profile: DgMedicationAllergy
 Parent: CHCoreAllergyIntolerance
 Id: dg-medication-allergy
 Title: "DG Arzneimittelallergie"
 Description: "Arzneimittelallergie, wie sie in der Hausarztpraxis erfasst und auf der Notfallstation gelesen wird."
 
-// Anforderung 1: nur Allergien gegen Arzneimittel
-// * category TODO_Regel
+// Anforderung 1: Genau eine Kategorie, immer Arzneimittel.
+* category 1..1
+* category = #medication
 
-// Anforderung 2: klinischer Status
-// * clinicalStatus TODO_Regel
+// Anforderung 2: Der klinische Status ist verpflichtend.
+* clinicalStatus 1..1
 
-// Anforderung 3: Codes aus der Schweizer Allergieliste ($ch-allergy-vs)
-// * code TODO_Regel
+// Anforderung 3: Allergie verpflichtend; passenden Code aus dem ValueSet nutzen.
+// Falls kein passender Code existiert, bleibt eine andere Erfassung möglich.
+* code 1..1
+* code from $ch-allergy-vs (extensible)
 
-// Anforderung 4: Kritikalität (wie gefährlich die Allergie ist)
-// * criticality TODO_Regel
+// Anforderung 4: Die Gefährlichkeit muss angegeben und unterstützt werden.
+// Bei unbekannter Gefährlichkeit kann #unable-to-assess verwendet werden.
+* criticality 1..1 MS
 
-// Anforderung 5: Beginn der Allergie
-// * onset[x] TODO_Regel
+// Anforderung 5: Beginn als Datum oder Alter; die Angabe bleibt optional.
+* onset[x] only dateTime or Age
+* onset[x] MS
 
-// Anforderung 6: wer die Allergie erfasst hat
-// * recorder TODO_Regel
+// Anforderung 6: Die erfassende Fachperson muss angegeben sein.
+* recorder 1..1
+* recorder only Reference(CHCorePractitioner or CHCorePractitionerRole)
 
-// Anforderung 7: Reaktionen (die Symptome einer Reaktion stehen in reaction.manifestation)
-// * reaction TODO_Regel
-// * reaction.manifestation TODO_Regel   (nur falls ihr dafür eine Regel braucht)
+// Anforderung 7: Reaktionen bleiben optional und müssen unterstützt werden.
+// Bei bestätigter Allergie verlangt die Invariante mindestens eine Reaktion.
+* reaction MS
+* reaction.manifestation MS
+* reaction.manifestation from $ch-allergy-manifestation-vs (extensible)
 
-// Invariante (steht schon in invarianten.fsh), nur die // entfernen:
-// * obeys dg-allergy-1
+// Vorgegebene Invariante aus invarianten.fsh anwenden.
+* obeys dg-allergy-1
